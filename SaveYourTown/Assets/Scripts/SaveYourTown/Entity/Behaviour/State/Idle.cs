@@ -22,7 +22,7 @@ namespace SaveYourTown.Entity.Behaviour.State
                 entity.setState(behaviourStateFactory.getMoveState(entity));
             }
 
-            if (!player.IsNearShop)
+            if (player != null && !player.IsNearShop)
             {
                 if (keysPressed.attack)
                 {
@@ -39,7 +39,7 @@ namespace SaveYourTown.Entity.Behaviour.State
             }
             else
             {
-                if (keysPressed.actionButtonOne)
+                if (player != null && keysPressed.actionButtonOne)
                 {
                     entity.setState(((BehaviourStateFactory)behaviourStateFactory).getShopState(entity));
                 }

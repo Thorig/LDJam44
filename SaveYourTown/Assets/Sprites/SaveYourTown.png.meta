@@ -37,6 +37,11 @@ TextureImporter:
     21300064: SaveYourTown_32
     21300066: SaveYourTown_33
     21300068: SaveYourTown_34
+    21300070: SaveYourTown_35
+    21300072: SaveYourTown_36
+    21300074: SaveYourTown_37
+    21300076: SaveYourTown_38
+    21300078: SaveYourTown_39
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -826,13 +831,113 @@ TextureImporter:
         width: 14
         height: 5
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
       spriteID: a0c2dc00dde9d01419fa7b362326886d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SaveYourTown_35
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 205
+        width: 20
+        height: 8
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be60a20c06b2342448fa09d2d988ac55
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SaveYourTown_36
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 201
+        width: 19
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a44447bc06d0de140bd7b3a334c1b8b0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SaveYourTown_37
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 200
+        width: 24
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53abc1c9c2fe4404bbcfce7726074dc9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SaveYourTown_38
+      rect:
+        serializedVersion: 2
+        x: 359
+        y: 200
+        width: 22
+        height: 14
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5760670e109951d44bbb83dfb77a7034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SaveYourTown_39
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 200
+        width: 22
+        height: 15
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9b14c20f86553a4d85279201c131f6e
       vertices: []
       indices: 
       edges: []

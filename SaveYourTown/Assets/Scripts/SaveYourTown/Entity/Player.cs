@@ -40,6 +40,14 @@ namespace SaveYourTown.Entity
             setEntity(new BehaviourStateFactory());
         }
 
+        public override void animationEffect(int messageId)
+        {
+            if(state is Behaviour.State.Attack)
+            {
+                ((Behaviour.State.Attack)state).effect(messageId);
+            }
+        }
+
         public override void LateUpdate()
 		{
 			base.LateUpdate();

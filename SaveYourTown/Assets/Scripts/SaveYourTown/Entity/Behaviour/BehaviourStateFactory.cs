@@ -47,5 +47,15 @@ namespace SaveYourTown.Entity.Behaviour
             entityIdle.init(entity);
             return entityIdle;
         }
+
+        public override AbstractState getAttackState(IEntity entity)
+        {
+            if (entityAttack == null)
+            {
+                entityAttack = new Attack();
+            }
+            entityAttack.init(entity);
+            return entityAttack;
+        }
     }
 }

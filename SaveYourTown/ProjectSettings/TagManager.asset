@@ -7,6 +7,7 @@ TagManager:
   - Tile
   - GameManager
   - Slope
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Player
   - Slope
   - Trigger
-  - 
+  - Enemy
   - 
   - 
   - 
