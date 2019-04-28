@@ -18,6 +18,7 @@ namespace SaveYourTown.Entity.Behaviour.State
             switchAnimation(Animation.AnimationAttributes.ANIMATION_DEFEND, entity);
             LayersLookup layersLookup = GameObject.FindGameObjectWithTag("GameManager").GetComponent<LayersLookup>();
             layermask = (1 << layersLookup.giveLayerNumber("Tile"));
+            entity.getTransform().gameObject.GetComponent<Player>().isDefending = true;
         }
 
         public override void update(IEntity entity)
@@ -26,6 +27,7 @@ namespace SaveYourTown.Entity.Behaviour.State
 
             if (!keysPressed.actionButtonOne)
             {
+                entity.getTransform().gameObject.GetComponent<Player>().isDefending = false;
                 IBehaviourStateFactory behaviourStateFactory = entity.getBehaviourStateFactory();
                 entity.setState(((BehaviourStateFactory)behaviourStateFactory).getIdleState(entity));
             }

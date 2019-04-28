@@ -2,20 +2,30 @@ using GameLib.Entity.NonPlayerCharacter;
 using SaveYourTown.Entity.NonPlayerCharacter.StateMachine.Logic.Dog;
 using GameLib.Entity.NonPlayerCharacter.StateMachine;
 using SaveYourTown.Entity.Behaviour;
+using UnityEngine;
 
 namespace SaveYourTown.Entity.NonPlayerCharacter
 {
 	public class Dog : AICharacter
 	{
-		// Use this for initialization
-		protected override void init()
+        public Player target;
+        public int vitality;
+        public int power;
+        public Collider2D trigger;
+
+        public bool doDamage;
+
+        // Use this for initialization
+        protected override void init()
 		{
 			base.init();
 			IAIControllerFactory controllerFactory = AIControllerFactory.getEntity();
 			aiCharacterController = controllerFactory.getAICharacterController(this, new BrainFactory());
-			//Initialize your attributes or other necessities below.
-
-		}
+            //Initialize your attributes or other necessities below.
+            aiCharacterController.switchBrain(((BrainFactory)aiCharacterController.Factory).getIdleBrain(this));
+            doDamage = false;
+            trigger.enabled = true;
+        }
 
         protected override void setEntity()
         {
@@ -24,25 +34,55 @@ namespace SaveYourTown.Entity.NonPlayerCharacter
 
         protected override void fixedUpdateBody()
 		{
-			//base.fixedUpdateBody();
+			base.fixedUpdateBody();
 			//Add your code below.
 
 		}
 
-        private void OnTriggerEnter2D(UnityEngine.Collider2D collision)
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.tag.CompareTo("Player") == 0)
+            if (target == null && collision.tag.CompareTo("Player") == 0)
             {
-                entity.setState(entity.getBehaviourStateFactory().getAttackState(entity));
+                trigger.enabled = false;
+                target = collision.gameObject.GetComponent<Player>();
+                aiCharacterController.switchBrain(((BrainFactory)aiCharacterController.Factory).getAttackBrain(this));
             }
         }
 
-        private void OnTriggerExit2D(UnityEngine.Collider2D collision)
+        private void checkDamage(Collision2D collision)
         {
-            if (collision.tag.CompareTo("Player") == 0)
+            Player player = collision.gameObject.GetComponent<Player>();
+            if (player != null && player.doDamage)
             {
-                entity.setState(entity.getBehaviourStateFactory().getIdleState(entity));
+                player.doDamage = false;
+                vitality -= player.power;
+                if(vitality <= 0)
+                {
+                    target = null;
+                    vitality = 5;
+                    aiCharacterController.switchBrain(((BrainFactory)aiCharacterController.Factory).getDieBrain(this));
+                    State = Entity.getBehaviourStateFactory().getDeathState(Entity);
+                }
             }
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            checkDamage(collision);
+        }
+
+        private void OnCollisionExit2D(Collision2D collision)
+        {
+        }
+
+        private void OnCollisionStay2D(Collision2D collision)
+        {
+            checkDamage(collision);
+        }
+
+        public void walk()
+        {
+            aiCharacterController.switchBrain(((BrainFactory)aiCharacterController.Factory).getMoveBrain(this));
         }
 
         public override void animationEffect(int messageId)
@@ -51,6 +91,16 @@ namespace SaveYourTown.Entity.NonPlayerCharacter
             {
                 ((Behaviour.State.Attack)state).effect(messageId);
             }
+        }
+
+        public void damage()
+        {
+            doDamage = true;
+        }
+
+        public void noDamage()
+        {
+            doDamage = false;
         }
     }
 }

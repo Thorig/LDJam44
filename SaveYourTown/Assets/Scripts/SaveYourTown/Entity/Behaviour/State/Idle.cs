@@ -22,11 +22,19 @@ namespace SaveYourTown.Entity.Behaviour.State
                 entity.setState(behaviourStateFactory.getMoveState(entity));
             }
 
-            if (player != null && !player.IsNearShop)
+            if (player != null && player.IsNearShop)
+            {
+                if (keysPressed.actionButtonOne)
+                {
+                    entity.setState(((BehaviourStateFactory)behaviourStateFactory).getShopState(entity));
+                }
+            }
+            else
             {
                 if (keysPressed.attack)
                 {
-                    entity.setState(behaviourStateFactory.getAttackState(entity));
+
+                    entity.setState(((BehaviourStateFactory)behaviourStateFactory).getAttackState(entity, Move.getDirection(keysPressed)));
                 }
                 else if (keysPressed.actionButtonOne)
                 {
@@ -35,13 +43,6 @@ namespace SaveYourTown.Entity.Behaviour.State
                 else
                 {
                     base.update(entity);
-                }
-            }
-            else
-            {
-                if (player != null && keysPressed.actionButtonOne)
-                {
-                    entity.setState(((BehaviourStateFactory)behaviourStateFactory).getShopState(entity));
                 }
             }
         }

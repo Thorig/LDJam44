@@ -11,14 +11,14 @@ namespace SaveYourTown.Entity.NonPlayerCharacter.StateMachine.Logic.Dog
 		public override void init(GameLib.Entity.NonPlayerCharacter.AICharacter character)
 		{
 			player = GameObject.FindGameObjectWithTag("Player");
-			//Initialize your attributes or other necessities below.
-
-		}
+            //Initialize your attributes or other necessities below.
+            character.State = character.Entity.getBehaviourStateFactory().getIdleState(character.Entity);
+            ((NonPlayerCharacter.Dog)character).trigger.enabled = true;
+        }
 
 		public override void update(GameLib.Entity.NonPlayerCharacter.AICharacter character)
 		{
-			//Add your code below.
-
-		}
+            //Add your code below.
+        }
 	}
 }

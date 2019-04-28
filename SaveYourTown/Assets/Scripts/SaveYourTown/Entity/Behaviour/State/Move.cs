@@ -7,28 +7,91 @@ namespace SaveYourTown.Entity.Behaviour.State
 {
 	public class Move : GameLib.Entity.Behaviour.State.Move
 	{
-		public override void update(IEntity entity)
+        public static int getDirection(KeysPressed keysPressed)
+        {
+            int direction = -1;
+            
+            if (keysPressed.right)
+            {
+                direction = 2;
+                if (keysPressed.up)
+                {
+                    direction = 1;
+                }
+                if(keysPressed.down)
+                {
+                    direction = 3;
+                }
+            }
+            else if (keysPressed.left)
+            {
+                direction = 6;
+                if (keysPressed.up)
+                {
+                    direction = 7;
+                }
+                if (keysPressed.down)
+                {
+                    direction = 5;
+                }
+            }
+            else if (keysPressed.up)
+            {
+                direction = 0;
+            }
+            else if (keysPressed.down)
+            {
+                direction = 4;
+            }
+
+            return direction;
+        }
+
+        public override void update(IEntity entity)
         {
             Gravity gravity = entity.getGravity();
             KeysPressed keysPressed = entity.getKeysPressed();
-            IGravityClient gravityClient = entity.getGravityClient();
-            bool moving = false;
 
-            moving = moveEntityUp(entity, keysPressed, gravity, entity.getMovementSpeed());
-            if(!moving)
+            if (keysPressed.attack)
             {
-                moving = moveEntityDown(entity, keysPressed, gravity, entity.getMovementSpeed());
+                Player player = entity.getTransform().gameObject.GetComponent<Player>();
+                IBehaviourStateFactory behaviourStateFactory = entity.getBehaviourStateFactory();
+
+                if (player != null && player.IsNearShop)
+                {
+                    if (keysPressed.actionButtonOne)
+                    {
+                        entity.setState(((BehaviourStateFactory)behaviourStateFactory).getShopState(entity));
+                    }
+                }
+                else
+                { 
+                    int direction = (!keysPressed.left && !keysPressed.right && !keysPressed.up && !keysPressed.down) ? -1 : getDirection(keysPressed);
+
+                    entity.setState(((BehaviourStateFactory)behaviourStateFactory).getAttackState(entity, direction));
+                }
             }
-            if(moveEntity(entity, keysPressed, gravity, entity.getMovementSpeed()))
+            else
             {
-                moving = true;
-            }
+                IGravityClient gravityClient = entity.getGravityClient();
+                bool moving = false;
 
-            entity.setMoving(moving);
+                moving = moveEntityUp(entity, keysPressed, gravity, entity.getMovementSpeed());
+                if (!moving)
+                {
+                    moving = moveEntityDown(entity, keysPressed, gravity, entity.getMovementSpeed());
+                }
+                if (moveEntity(entity, keysPressed, gravity, entity.getMovementSpeed()))
+                {
+                    moving = true;
+                }
 
-            if (!keysPressed.left && !keysPressed.right && !keysPressed.up && !keysPressed.down)
-            {
-                goIdle(entity);
+                entity.setMoving(moving);
+
+                if (!keysPressed.left && !keysPressed.right && !keysPressed.up && !keysPressed.down)
+                {
+                    goIdle(entity);
+                }
             }
         }
 

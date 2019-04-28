@@ -2,6 +2,7 @@
 using GameLib.Entity.Behaviour;
 using GameLib.Level;
 using GameLib.System.Controller;
+using SaveYourTown.System;
 using UnityEngine;
 
 namespace SaveYourTown.Entity.Behaviour.State
@@ -86,6 +87,9 @@ namespace SaveYourTown.Entity.Behaviour.State
             {
                 case 0:
                     //Debug.Log("rest");
+
+                    Sun sun = GameObject.FindGameObjectWithTag("Sun").GetComponent<Sun>();
+                    sun.reset();
                     break;
                 case 1:
                     //Debug.Log("buy vit");

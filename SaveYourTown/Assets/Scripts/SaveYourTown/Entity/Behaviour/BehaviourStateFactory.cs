@@ -50,11 +50,16 @@ namespace SaveYourTown.Entity.Behaviour
 
         public override AbstractState getAttackState(IEntity entity)
         {
+            return getAttackState(entity, -1);
+        }
+
+        public virtual AbstractState getAttackState(IEntity entity, int directionOfAttack)
+        {
             if (entityAttack == null)
             {
                 entityAttack = new Attack();
             }
-            entityAttack.init(entity);
+            ((Attack)entityAttack).init(entity, directionOfAttack);
             return entityAttack;
         }
     }
