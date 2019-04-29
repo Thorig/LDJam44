@@ -4,6 +4,7 @@ using SaveYourTown.Entity.NonPlayerCharacter;
 using SaveYourTown.System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace SaveYourTown.Entity
@@ -45,6 +46,10 @@ namespace SaveYourTown.Entity
             }
         }
 
+
+        [SerializeField]
+        private GameObject startScreen;
+
         public override void setGravity()
         {
             IGravityFactory gravityFactory = new GravityFactory();
@@ -80,6 +85,7 @@ namespace SaveYourTown.Entity
                 {
                     currentVitality = 0;
                     State = Entity.getBehaviourStateFactory().getDeathState(Entity);
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }
                 updateVitalityBar();
             }
@@ -119,6 +125,11 @@ namespace SaveYourTown.Entity
         public override void LateUpdate()
 		{
 			base.LateUpdate();
+
+            if(startScreen.activeInHierarchy && (keysPressed.down || keysPressed.up || keysPressed.left || keysPressed.right))
+            {
+                startScreen.SetActive(false);
+            }
         }
 
         public void damage()
