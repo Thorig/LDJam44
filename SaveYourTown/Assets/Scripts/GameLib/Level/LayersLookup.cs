@@ -10,7 +10,7 @@ namespace GameLib.Level
 
         [SerializeField]
         protected List<int> layerMapValues;
-
+        
         public int giveLayerNumber(string layerName)
         {
             return layerMapValues[layerMapKeys.IndexOf(layerName)];

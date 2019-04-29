@@ -42,6 +42,8 @@ TextureImporter:
     21300074: SaveYourTown_37
     21300076: SaveYourTown_38
     21300078: SaveYourTown_39
+    21300080: SaveYourTown_40
+    21300082: SaveYourTown_41
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -938,6 +940,46 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: b9b14c20f86553a4d85279201c131f6e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SaveYourTown_40
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 399
+        width: 166
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6fc91f1b1d09d7e49ba8b8f507a01b05
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SaveYourTown_41
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 473
+        width: 56
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b617812d814c2b419a3ffef83c3fc24
       vertices: []
       indices: 
       edges: []

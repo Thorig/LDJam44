@@ -34,6 +34,12 @@ namespace SaveYourTown.Entity.Behaviour.State
 
             GameObject shopCursor = entity.getTransform().gameObject.GetComponent<Player>().shopCursor;
             setCursor(shopCursor, entity.getTransform().position);
+
+            Sun sun = GameObject.FindGameObjectWithTag("Sun").GetComponent<Sun>();
+            entity.getTransform().gameObject.GetComponent<Player>().notForSale[0].SetActive((!sun.canRest));
+
+            entity.getTransform().gameObject.GetComponent<Player>().notForSale[1].SetActive(!(sun.amountOfBlood >= (10 + (entity.getTransform().gameObject.GetComponent<Player>().extraVitality * 2))));
+            entity.getTransform().gameObject.GetComponent<Player>().notForSale[2].SetActive(!(sun.amountOfBlood >= (10 + (entity.getTransform().gameObject.GetComponent<Player>().extraPower * 2))));
         }
 
         private void setCursor(GameObject shopCursor, Vector2 positionPlayer)
@@ -67,6 +73,9 @@ namespace SaveYourTown.Entity.Behaviour.State
             KeysPressed keysPressed = entity.getKeysPressed();
             GameObject shopCursor = entity.getTransform().gameObject.GetComponent<Player>().shopCursor;
 
+            Sun sun = GameObject.FindGameObjectWithTag("Sun").GetComponent<Sun>();
+            entity.getTransform().gameObject.GetComponent<Player>().notForSale[0].SetActive((!sun.canRest));
+
             if (!keysPressed.down && !keysPressed.up && !keysPressed.actionButtonOne && !keysPressed.attack)
             {
                 cursorMoved = false;
@@ -86,19 +95,40 @@ namespace SaveYourTown.Entity.Behaviour.State
             switch (cursorState)
             {
                 case 0:
-                    //Debug.Log("rest");
+                    if (//keysPressed.actionButtonOne || 
+                        keysPressed.attack)
+                    {
+                        entity.getTransform().gameObject.GetComponent<Player>().resetVitality();
+                        sun.reset();
+                    }
 
-                    Sun sun = GameObject.FindGameObjectWithTag("Sun").GetComponent<Sun>();
-                    sun.reset();
                     break;
                 case 1:
-                    //Debug.Log("buy vit");
+                    if ((sun.amountOfBlood >= (10 + (entity.getTransform().gameObject.GetComponent<Player>().extraVitality * 2))) && 
+                        (//keysPressed.actionButtonOne || 
+                        keysPressed.attack))
+                    {
+                        sun.amountOfBlood -= (10 + (entity.getTransform().gameObject.GetComponent<Player>().extraVitality * 2));
+                        entity.getTransform().gameObject.GetComponent<Player>().extraVitality += 1;
+                        entity.getTransform().gameObject.GetComponent<Player>().notForSale[1].SetActive(!(sun.amountOfBlood >= (10 + (entity.getTransform().gameObject.GetComponent<Player>().extraVitality * 2))));
+                        entity.getTransform().gameObject.GetComponent<Player>().notForSale[2].SetActive(!(sun.amountOfBlood >= (10 + (entity.getTransform().gameObject.GetComponent<Player>().extraPower * 2))));
+                    }
                     break;
                 case 2:
-                    //Debug.Log("buy pwr");
+                    if ((sun.amountOfBlood >= (10 + (entity.getTransform().gameObject.GetComponent<Player>().extraPower * 2))) &&
+                        (//keysPressed.actionButtonOne || 
+                        keysPressed.attack))
+                    {
+                        sun.amountOfBlood -= (10 + (entity.getTransform().gameObject.GetComponent<Player>().extraPower * 2));
+                        entity.getTransform().gameObject.GetComponent<Player>().extraPower += 1;
+                        entity.getTransform().gameObject.GetComponent<Player>().notForSale[1].SetActive(!(sun.amountOfBlood >= (10 + (entity.getTransform().gameObject.GetComponent<Player>().extraVitality * 2))));
+                        entity.getTransform().gameObject.GetComponent<Player>().notForSale[2].SetActive(!(sun.amountOfBlood >= (10 + (entity.getTransform().gameObject.GetComponent<Player>().extraPower * 2))));
+                    }
+
                     break;
                 case 3:
-                    if (keysPressed.actionButtonOne || keysPressed.attack)
+                    if (//keysPressed.actionButtonOne || 
+                        keysPressed.attack)
                     {
                         IBehaviourStateFactory behaviourStateFactory = entity.getBehaviourStateFactory();
                         entity.setState(((BehaviourStateFactory)behaviourStateFactory).getIdleState(entity));

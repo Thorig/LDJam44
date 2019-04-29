@@ -1,6 +1,8 @@
 using GameLib.System.Gravity2D;
 using SaveYourTown.Entity.Behaviour;
 using SaveYourTown.Entity.NonPlayerCharacter;
+using SaveYourTown.System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,12 +15,20 @@ namespace SaveYourTown.Entity
         public GameObject button;
         public GameObject backGroundShop;
         public GameObject shopCursor;
+        public List<GameObject> notForSale;
+
+        public int extraVitality = 0;
         public float totalVitality = 100;
         public float currentVitality = 100;
         public bool doDamage;
         public bool isDefending = false;
 
+        [SerializeField]
+        private Sun _sun;
+
         public int power;
+
+        public int extraPower = 0;
 
         private bool isNearShop = false;
 
@@ -64,18 +74,30 @@ namespace SaveYourTown.Entity
                 dog.doDamage = false;
                 currentVitality -= dog.power;
 
+                _sun.showBlood(transform.position);
+
                 if (currentVitality <= 0)
                 {
                     currentVitality = 0;
                     State = Entity.getBehaviourStateFactory().getDeathState(Entity);
                 }
-
-                Vector3 scale = new Vector3();
-                scale.x = (currentVitality) / totalVitality;
-                scale.y = 1;
-                scale.z = 1;
-                vitalityBar.transform.localScale = scale;
+                updateVitalityBar();
             }
+        }
+
+        private void updateVitalityBar()
+        {
+            Vector3 scale = new Vector3();
+            scale.x = (currentVitality) / (totalVitality + extraVitality);
+            scale.y = 1;
+            scale.z = 1;
+            vitalityBar.transform.localScale = scale;
+        }
+
+        public void resetVitality()
+        {
+            currentVitality = totalVitality + extraVitality;
+            updateVitalityBar();
         }
 
         private void OnCollisionEnter2D(Collision2D collision)

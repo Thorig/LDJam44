@@ -3,6 +3,7 @@ using SaveYourTown.Entity.NonPlayerCharacter.StateMachine.Logic.Dog;
 using GameLib.Entity.NonPlayerCharacter.StateMachine;
 using SaveYourTown.Entity.Behaviour;
 using UnityEngine;
+using SaveYourTown.System;
 
 namespace SaveYourTown.Entity.NonPlayerCharacter
 {
@@ -12,6 +13,9 @@ namespace SaveYourTown.Entity.NonPlayerCharacter
         public int vitality;
         public int power;
         public Collider2D trigger;
+
+        [SerializeField]
+        private Sun _sun;
 
         public bool doDamage;
 
@@ -55,13 +59,15 @@ namespace SaveYourTown.Entity.NonPlayerCharacter
             if (player != null && player.doDamage)
             {
                 player.doDamage = false;
-                vitality -= player.power;
+                vitality -= player.power + player.extraPower;
+                _sun.showBlood(transform.position);
                 if(vitality <= 0)
                 {
                     target = null;
-                    vitality = 5;
+                    vitality = 20;
                     aiCharacterController.switchBrain(((BrainFactory)aiCharacterController.Factory).getDieBrain(this));
                     State = Entity.getBehaviourStateFactory().getDeathState(Entity);
+                    _sun.addBloodAmount(2);
                 }
             }
         }
@@ -101,6 +107,13 @@ namespace SaveYourTown.Entity.NonPlayerCharacter
         public void noDamage()
         {
             doDamage = false;
+        }
+
+        public void reset()
+        {
+            target = null;
+            vitality = 20;
+            aiCharacterController.switchBrain(((BrainFactory)aiCharacterController.Factory).getIdleBrain(this));
         }
     }
 }

@@ -15,7 +15,7 @@ namespace SaveYourTown.Entity.NonPlayerCharacter.StateMachine.Logic.Dog
         {
             player = GameObject.FindGameObjectWithTag("Player");
             //Initialize your attributes or other necessities below.
-            respawnTimer = UnityEngine.Random.Range(2.20f, 3.00f);
+            respawnTimer = UnityEngine.Random.Range(4.0f, 5.50f);
         }
 
         public override void update(GameLib.Entity.NonPlayerCharacter.AICharacter character)
